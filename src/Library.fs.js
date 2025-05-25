@@ -1,15 +1,19 @@
 import { watch, onUnmounted, onMounted, ref, reactive, createApp, defineComponent, h } from "vue";
-import { Record } from "../sample/my-vue-app/src/fable_modules/fable-library-js.4.25.0/Types.js";
-import { record_type } from "../sample/my-vue-app/src/fable_modules/fable-library-js.4.25.0/Reflection.js";
-import { map, collect, empty } from "../sample/my-vue-app/src/fable_modules/fable-library-js.4.25.0/List.js";
-import { map as map_1, toList } from "../sample/my-vue-app/src/fable_modules/fable-library-js.4.25.0/Seq.js";
-import { toConsole } from "../sample/my-vue-app/src/fable_modules/fable-library-js.4.25.0/String.js";
+import { Record } from "./fable_modules/fable-library-js.4.25.0/Types.js";
+import { record_type } from "./fable_modules/fable-library-js.4.25.0/Reflection.js";
+import { map, collect, empty } from "./fable_modules/fable-library-js.4.25.0/List.js";
+import { map as map_1, toList } from "./fable_modules/fable-library-js.4.25.0/Seq.js";
+import { toConsole } from "./fable_modules/fable-library-js.4.25.0/String.js";
 
 export const Vue_h = h;
 
 export const Vue_defineComponent = defineComponent;
 
 export const Vue_createApp = createApp;
+
+export function Vue_text(s) {
+    return s;
+}
 
 export class Composition_Ref$1 extends Record {
     constructor(value) {

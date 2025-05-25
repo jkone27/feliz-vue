@@ -6,7 +6,7 @@ open Feliz.ViewEngine
 open System
 
 [<Erase>]
-type HyperScript = unit
+type VNode = obj
 
 /// VueApp type for createApp return
 [<Erase>]
@@ -15,7 +15,7 @@ type VueApp =
 
 [<Erase>]
 type IVueComponent =
-    abstract render: unit -> HyperScript
+    abstract render: unit -> VNode
 
 [<Erase>]
 type VueElement = ReactElement
@@ -27,13 +27,13 @@ type IVueProperty = IReactProperty
 [<Erase>]
 module Vue =
     
-    let h (tag: string, props: IVueProperty list, children: HyperScript seq) : HyperScript =
+    let h (tag: string, props: obj, children: obj) : VNode =
         importMember "vue"
 
     let defineComponent (options: obj) : ReactElement =
         importMember "vue"
 
-    let createApp (app: IVueComponent) : VueApp =
+    let createApp (app: obj) : VueApp =
         importMember "vue"
 
 
@@ -62,7 +62,7 @@ module H =
         | ReactElement.Elements(elements) -> 
             elements |> Seq.toList
 
-    let rec Render (el: ReactElement) : HyperScript =
+    let rec Render (el: ReactElement) : VNode =
         
         let reactChildren = getChildrenFromEl el
         let vueChildren = reactChildren |> List.map Render
@@ -76,7 +76,6 @@ module H =
         | Element(tag, props) ->
             Vue.h(tag, props, vueChildren)
         | ReactElement.Elements(elements) ->
-            elements |> Seq.map Render 
-            |> ignore
+            elements |> Seq.map Render :?> VNode
             
 

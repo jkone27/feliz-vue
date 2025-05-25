@@ -35,14 +35,12 @@ open Browser.Dom
 ReactDOM.render(App(), document.getElementById "root")
 *)
 
-type Simple() = 
-    interface IVueComponent with 
-        member this.render() = 
-            Vue.h 
-                ("div", 
-                    [ "app" ], 
-                    [ Vue.h("h1", [], [ Vue.text "Hello, World!" ]) ])
+let SimpleComponent =
+    {| render = fun () -> Vue.h("div", {| id = "app" |}, "Hello, World!") |}
 
-let app = Vue.createApp(App.App())
+printfn "mounting vue app" //ok
+let app = Vue.createApp(SimpleComponent)
 app.mount "#app"
+
+printfn "mounted" // ok
 
