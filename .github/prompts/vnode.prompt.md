@@ -1,6 +1,6 @@
 ### VNode
 
-```
+```ts
 type VNodeChildren = 
   | string
   | VNode

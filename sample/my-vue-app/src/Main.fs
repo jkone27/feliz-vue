@@ -24,23 +24,17 @@ createApp(App).mount('#app')
 *)
 
 open Feliz.Vue
+open Fable.Core.JsInterop
 
-// or can we reue here Feliz and adapt it to Vue?
-// how does the F# api for Vue look like here?
+importSideEffects "./style.css"
 
-(*
-// in Feliz we have
-open Browser.Dom
+// this one works do not touch it, and do not use it for now
+let helloWorldVNode = 
+    Vue.h("div", 
+        {| id = "app" |}, 
+        [| "Hello, World!" |]
+    ) 
 
-ReactDOM.render(App(), document.getElementById "root")
-*)
-
-let SimpleComponent =
-    {| render = fun () -> Vue.h("div", {| id = "app" |}, "Hello, World!") |}
-
-printfn "mounting vue app" //ok
-let app = Vue.createApp(SimpleComponent)
-app.mount "#app"
-
-printfn "mounted" // ok
+let app = Vue.createAppFromVNode(App.vnode)
+app.mount("#app")
 

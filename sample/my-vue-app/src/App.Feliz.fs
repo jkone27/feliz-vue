@@ -4,8 +4,7 @@ open Feliz
 open Feliz.Vue
 open Components
 open Feliz.ViewEngine
-
-let x = Html.div [ ]
+open Fable.Core.JsInterop
 
 (*
 // Define root component using only `h`
@@ -17,33 +16,37 @@ const App = {
 }
 
 *)
-type App() = 
 
-    interface IVueComponent with 
+let vueLogo: string = import "default" "./assets/vue.svg"
 
-        member this.render() =
-
-            Html.div [
-                Html.div [
-                    Html.a [
-                        prop.href "https://vite.dev"
-                        prop.target "_blank"
-                        prop.children [
-                            Html.img [ prop.src "/vite.svg"; prop.className "logo"; prop.alt "Vite logo" ]
-                        ]
-                    ]
-                    Html.a [
-                        prop.href "https://vuejs.org/"
-                        prop.target "_blank"
-                        prop.children [
-                            Html.img [ 
-                                prop.src "./assets/vue.svg"; prop.className "logo vue"; prop.alt "Vue logo" 
-                            ]
-                        ]
+let vnode = 
+    Html.div [
+        Html.div [
+            Html.a [
+                prop.href "https://vite.dev"
+                prop.target "_blank"
+                prop.children [
+                    Html.img [ 
+                        prop.src "/vite.svg"
+                        prop.className "logo"
+                        prop.alt "Vite logo" 
                     ]
                 ]
-                
-                Html.h1 "HELLO VUE 3 + FELIZ + F#"
             ]
-            |> H.Render
-            
+            Html.a [
+                prop.href "https://vuejs.org/"
+                prop.target "_blank"
+                prop.children [
+                    Html.img [ 
+                        prop.src vueLogo
+                        prop.className "logo vue"
+                        prop.alt "Vue logo" 
+                    ]
+                ]
+            ]
+        ]
+        
+        Html.h1 "HELLO VUE 3 + FELIZ + F#"
+    ]
+    |> H.Render
+
