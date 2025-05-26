@@ -53,57 +53,71 @@ module Composition =
     let watch (source: obj) (callback: obj -> unit) : unit = importMember "vue"
 
 module H =
-
     open Feliz.ViewEngine
-    open Feliz.ViewEngine.prop
+    open Fable.Core.JsInterop
 
-    // create a fable js literal object from a list of properties
+    /// Build a plain JS props object from Feliz.ViewEngine props
     let inline propsToVObj (props: IReactProperty list) : VProp =
         props
-        |> List.collect (fun prop ->
-            match prop with
-            | IReactProperty.Text _ -> 
-                [] // Do not add text as a prop attribute
-            | IReactProperty.Children children -> 
-                [] // do not map children here, they will be handled separately
-            | IReactProperty.KeyValue (k,v) -> 
-                [ k,v ]
-        )
+        |> List.choose (function
+            | IReactProperty.KeyValue(k,v) -> Some(k,v)
+            | _ -> None)
         |> createObj
 
-    let getChildrenFromEl (el: ReactElement) : ReactElement array =
+    /// Extract the immediate children of a ReactElement
+    let getChildren (el: ReactElement) : ReactElement list =
         match el with
-        | VoidElement(_, props) -> 
-            props 
-            |> List.collect (function | Feliz.ViewEngine.Children children -> children | _ -> [ ])
-        | TextElement _ -> 
-            [el] // Preserve text elements as children
-        | Element(_, props) -> 
-            props 
-            |> List.collect (function | Feliz.ViewEngine.Children children -> children | _ -> [])
-        | ReactElement.Elements(elements) -> 
-            elements 
-            |> Seq.toList
-        |> Seq.toArray
+        | Element(_, props)    
+        | VoidElement(_, props) ->
+            props
+            |> List.choose (function IReactProperty.Children ch -> Some ch | _ -> None)
+            |> List.concat
+        | ReactElement.Elements els ->
+            els |> Seq.toList
+        | TextElement _ ->
+            [ el ]
 
+    /// Recursively convert a `ReactElement` into a Vue `VNode`
     let rec Render (el: ReactElement) : VNode =
-        let reactChildren = getChildrenFromEl el
-        let vueChildren = reactChildren |> Array.map Render
-
         match el with
+        | TextElement txt -> 
+            printfn "Rendering React text element: %s" txt
+            txt
+        | Element(tag, props)
         | VoidElement(tag, props) ->
-            let vProps = props |> propsToVObj
-            printfn $"rendering void element {tag} with props {vProps}"
-            Vue.h(tag, vProps, vueChildren)
-        | TextElement text -> 
-            printfn $"rendering text element"
-            text // Return text as a string
-        | Element(tag, props) ->
-            let vProps = props |> propsToVObj
-            printfn $"rendering element {tag} with props {vProps}"
-            Vue.h(tag, vProps, vueChildren)
-        | ReactElement.Elements(elements) ->
-            printfn $"rendering nested elements: {elements |> Seq.length}"
-            Vue.h("div", [| |], elements |> Seq.map Render |> Array.ofSeq) // Wrap in a div
+            printfn $"Render {tag}"
+            let propsObj = propsToVObj props
+            let children =
+                getChildren el
+                |> List.map Render
+                |> List.toArray
 
+            let textLeaf = 
+                props
+                |> List.choose (function
+                    | IVueProperty.Text txt -> Some txt
+                    | _ -> None)
+                |> List.tryHead
 
+            match textLeaf with
+            | Some txt  -> 
+                printfn "render text leaf: %s" txt
+                let finalChildrenArray = 
+                    if Array.isEmpty children then
+                        [| txt :> VNode |]
+                    else
+                        Array.append [| txt |] children
+
+                Vue.h (tag,propsObj, finalChildrenArray)
+            | _ ->
+                // Call Vue.h
+                Vue.h (tag,propsObj,children)
+
+        | ReactElement.Elements els ->
+            // Wrap fragments in a <div>
+            let children =
+                els
+                |> Seq.map Render
+                |> Seq.toArray
+
+            Vue.h ("div", (createObj []) ,children)
