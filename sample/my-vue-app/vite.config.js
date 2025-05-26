@@ -13,6 +13,8 @@ export default defineConfig({
     vue()
   ],
   build: {
-    sourcemap: true
+    sourcemap: true,
+    // asset inlining can be problematic with Fable it seems (?) avoid it for now
+    assetsInlineLimit: 0,
   }
 })

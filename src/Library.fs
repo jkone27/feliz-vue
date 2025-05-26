@@ -36,7 +36,7 @@ module Vue =
     let defineComponent (options: obj) : ReactElement =
         importMember "vue"
 
-    let createApp (app: obj) : VueApp =
+    let private createApp (app: obj) : VueApp =
         importMember "vue"
 
     let createAppFromVNode(node: VNode) : VueApp =
@@ -97,7 +97,7 @@ module H =
             Vue.h(tag, vProps, vueChildren)
         | TextElement text -> 
             printfn $"rendering text element"
-            box text // Return text as a string
+            text // Return text as a string
         | Element(tag, props) ->
             let vProps = props |> propsToVObj
             printfn $"rendering element {tag} with props {vProps}"

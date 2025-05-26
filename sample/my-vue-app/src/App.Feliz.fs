@@ -6,18 +6,7 @@ open Components
 open Feliz.ViewEngine
 open Fable.Core.JsInterop
 
-(*
-// Define root component using only `h`
-const App = {
-    render() {
-        return h('div', { id: 'app' }, 'Hello, World!')
-    }
-}
-}
-
-*)
-
-let vueLogo: string = import "default" "./assets/vue.svg"
+let vueLogo: string = importDefault "./assets/vue.svg?url"
 
 let vnode = 
     Html.div [
@@ -38,7 +27,7 @@ let vnode =
                 prop.target "_blank"
                 prop.children [
                     Html.img [ 
-                        prop.src vueLogo
+                        prop.src $"{vueLogo}"
                         prop.className "logo vue"
                         prop.alt "Vue logo" 
                     ]
