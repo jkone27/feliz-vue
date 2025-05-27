@@ -7,6 +7,9 @@
 
   <ItemGroup>
     <Compile Include="Library.fs" />
+    <Compile Include="Vue.fs" />
+    <Compile Include="VHyperScript.fs" />
+    <Compile Include="Feliz.fs" />
   </ItemGroup>
 
   <ItemGroup>

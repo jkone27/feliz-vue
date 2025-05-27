@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{4F9DEAE5-078F-E77A-2E4A-FEB6FFE226FF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "my-vue-app", "my-vue-app", "{D3457D91-DD26-CBEC-AE36-17C0E9564168}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{94F5A20C-6B2B-B806-8277-2F542F88F951}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MyVueApp", "sample\my-vue-app\src\MyVueApp.fsproj", "{2A7DF948-452B-4F62-B98E-2B0517A63FAC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2A7DF948-452B-4F62-B98E-2B0517A63FAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A7DF948-452B-4F62-B98E-2B0517A63FAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A7DF948-452B-4F62-B98E-2B0517A63FAC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2A7DF948-452B-4F62-B98E-2B0517A63FAC}.Debug|x64.Build.0 = Debug|Any CPU
+		{2A7DF948-452B-4F62-B98E-2B0517A63FAC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2A7DF948-452B-4F62-B98E-2B0517A63FAC}.Debug|x86.Build.0 = Debug|Any CPU
+		{2A7DF948-452B-4F62-B98E-2B0517A63FAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A7DF948-452B-4F62-B98E-2B0517A63FAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A7DF948-452B-4F62-B98E-2B0517A63FAC}.Release|x64.ActiveCfg = Release|Any CPU
+		{2A7DF948-452B-4F62-B98E-2B0517A63FAC}.Release|x64.Build.0 = Release|Any CPU
+		{2A7DF948-452B-4F62-B98E-2B0517A63FAC}.Release|x86.ActiveCfg = Release|Any CPU
+		{2A7DF948-452B-4F62-B98E-2B0517A63FAC}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D3457D91-DD26-CBEC-AE36-17C0E9564168} = {4F9DEAE5-078F-E77A-2E4A-FEB6FFE226FF}
+		{94F5A20C-6B2B-B806-8277-2F542F88F951} = {D3457D91-DD26-CBEC-AE36-17C0E9564168}
+		{2A7DF948-452B-4F62-B98E-2B0517A63FAC} = {94F5A20C-6B2B-B806-8277-2F542F88F951}
+	EndGlobalSection
+EndGlobal
