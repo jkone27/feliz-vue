@@ -14,9 +14,6 @@ module Vue =
     let createApp (app: VComponent) : VueApp =
         importMember "vue"
 
-    let setup (setupFn: VueSetupArgs -> VNode) : VComponent =
-        importMember "vue"
-
     type VueRef<'T> = { mutable value: 'T }
 
     let reactive (initial: 'T) : 'T = importMember "vue"

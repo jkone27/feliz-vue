@@ -8,7 +8,7 @@ open Fable.Core.JsInterop
 
 let vueLogo: string = importDefault "./assets/vue.svg?url"
 
-let comp = (Components.HelloWorld "WORLD")
+let comp = (Components.HelloWorld.vue "WORLD")
 
 let view = 
     Html.div [

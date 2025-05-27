@@ -8,16 +8,18 @@ module VHyperScript =
     open Fable.Core.JsInterop
 
     /// Build a plain JS props object from Feliz.ViewEngine props
+    /// example:
+    ///  let vueProps = [ "onClick" ==> onClick; "className" ==> "btn" ] |> createObj
     let inline propsToVObj (props: IReactProperty list) : VProp =
         props
-        |> List.choose (function
+        |> List.collect (function
             // Map onClick event handler for vue compatibility
             | IReactProperty.KeyValue("onClick", v) -> 
-                Some("onClick", v)
+                [ "onClick" ==> v ]
             | IReactProperty.KeyValue(k,v) -> 
                 printfn "property: %s , value: %A" k v
-                Some(k,v)
-            | _ -> None)
+                [ k ==> v ]
+            | _ -> [ ])
         |> createObj
 
     /// Extract the immediate children of a ReactElement
@@ -62,7 +64,7 @@ module VHyperScript =
             | Some txt  -> 
                 printfn "render text leaf: %s" txt
                 let finalChildren = 
-                    Array.append [| txt :> VNode |] children
+                    Array.append [| ((fun () -> txt)()) :> VNode |] children
 
                 Vue.h (tag, propsObj, finalChildren)
             | _ ->

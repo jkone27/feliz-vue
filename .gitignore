@@ -73,3 +73,5 @@ coverage/
 
 # Ignore generated docs
 /docs/
+
+.fake
