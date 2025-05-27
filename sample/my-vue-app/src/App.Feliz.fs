@@ -8,7 +8,9 @@ open Fable.Core.JsInterop
 
 let vueLogo: string = importDefault "./assets/vue.svg?url"
 
-let vnode = 
+let comp = (Components.HelloWorld "WORLD")
+
+let view = 
     Html.div [
         Html.div [
             Html.a [
@@ -35,7 +37,6 @@ let vnode =
             ]
         ]
         
-        Html.h1 "HELLO VUE 3 + FELIZ + F#"
+        // TODO: next step is integrate components
     ]
-    |> H.Render
 
