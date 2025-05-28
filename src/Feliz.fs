@@ -1,6 +1,7 @@
 namespace Feliz.Vue
 
-module React =
+// TODO: fix as not working... could simplify rendering of apps / components
+module ReactPoc =
 
     open Feliz.ViewEngine
     open Feliz.Vue

@@ -1,6 +1,10 @@
 namespace Feliz.Vue
 
-/// This module provides translation from F# Fable Feliz.ViewEngine DSL
+// !!IMPORTANT: Feliz.ViewEngine needs to be extended to support events (road to v1)
+// until then it cannot be used for this scope as event props are not
+// included in the ReactElement nodes at the time being
+
+/// VHyperScript module provides translation from F# Fable Feliz.ViewEngine DSL
 /// to Vue compatible HTML Template synthax as VNode - h function call invocations
 module VHyperScript =
 
@@ -11,35 +15,43 @@ module VHyperScript =
     /// example:
     ///  let vueProps = [ "onClick" ==> onClick; "className" ==> "btn" ] |> createObj
     let inline propsToVObj (props: IReactProperty list) : VProp =
+
+        for p in props do
+            printfn $"prop: {p}"
+
         props
         |> List.collect (function
-            // Map onClick event handler for vue compatibility
-            | IReactProperty.KeyValue("onClick", v) -> 
-                [ "onClick" ==> v ]
-            | IReactProperty.KeyValue(k,v) -> 
+            | IReactProperty.KeyValue(k, v) -> 
+                printfn $"{k} value type: ${v.GetType().FullName}"
                 printfn "property: %s , value: %A" k v
                 [ k ==> v ]
             | _ -> [ ])
         |> createObj
+        |> fun vueObj -> printfn "Vue props: %A" vueObj; vueObj
 
     /// Extract the immediate children of a ReactElement
-    let inline getChildren (el: ReactElement) : ReactElement list =
+    let rec getChildren (el: ReactElement) : ReactElement list =
         match el with
         | Element(_, props)    
         | VoidElement(_, props) ->
             props
-            |> List.choose (function IReactProperty.Children ch -> Some ch | _ -> None)
+            |> List.choose (function 
+                IReactProperty.Children ch -> 
+                    Some ch 
+                | _ -> 
+                    None
+            )
             |> List.concat
         | ReactElement.Elements els ->
-            els |> Seq.toList
+            els |> Seq.collect getChildren |> Seq.toList
         | TextElement _ ->
-            [ el ]
+            [ ]
 
     /// Recursively convert a `Feliz.ViewEngine.ReactElement` into a `Feliz.Vue.VNode` Vue.h(tag, props, children)
     let rec Render (el: ReactElement) : VNode =
         match el with
         | TextElement txt -> 
-            printfn "Rendering React text element: %s" txt
+            printfn "Rendering TextElement: %s" txt
             txt
         | Element(tag, props)
         | VoidElement(tag, props) ->
@@ -64,7 +76,7 @@ module VHyperScript =
             | Some txt  -> 
                 printfn "render text leaf: %s" txt
                 let finalChildren = 
-                    Array.append [| ((fun () -> txt)()) :> VNode |] children
+                    Array.append [| txt :> VNode |] children
 
                 Vue.h (tag, propsObj, finalChildren)
             | _ ->
@@ -73,9 +85,7 @@ module VHyperScript =
 
         | ReactElement.Elements els ->
             // Wrap fragments in a <div>
-            let children =
-                els
-                |> Seq.map Render
-                |> Seq.toArray
-
-            Vue.h ("div", (createObj []) ,children)
+            els
+            |> Seq.map Render
+            |> Seq.toArray
+            |> box
