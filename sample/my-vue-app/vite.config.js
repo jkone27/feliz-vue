@@ -16,5 +16,10 @@ export default defineConfig({
     sourcemap: true,
     // asset inlining can be problematic with Fable it seems (?) avoid it for now
     assetsInlineLimit: 0,
+  },
+  resolve: {
+    alias: {
+      vue: 'vue/dist/vue.esm-bundler.js'
+    }
   }
 })
