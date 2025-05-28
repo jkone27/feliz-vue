@@ -12,6 +12,10 @@ or any other use-case where you need to generate HTML output.
 Feliz.ViewEngine have no dependencies, is Fable compatible, and can thus be used with both servers (e.g Node.js) or
 clients.
 
+## IMPORTANT ⚠️
+
+Props for event handlers and many others are not supported atm by Feliz.ViewEngine , see [Road to V1](https://github.com/dbrattli/Feliz.ViewEngine/issues/5) on github
+
 ## Installation
 
 Feliz.ViewEngine is available as a [NuGet package](https://www.nuget.org/packages/Feliz.ViewEngine/). To install:

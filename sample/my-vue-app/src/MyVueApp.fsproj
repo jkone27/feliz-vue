@@ -6,6 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="./components/VnodeHello.fs" />
+    <Compile Include="./components/Counter.fs" />
     <Compile Include="./components/HelloWorld.Feliz.fs" />
     <Compile Include="App.Feliz.fs" />
     <Compile Include="Main.fs" />

@@ -1,25 +1,41 @@
-module Components
+module Components.HelloWorld
 
 open Feliz
 open Feliz.Vue
 open Feliz.ViewEngine
+open Fable.Core.JsInterop
+
+let html str = str
+
+let vue (msg: string) : VComponent =
+
+    let setup () =
+        let count = Vue.ref 0
+
+        let onClick _ = 
+            count.value <- count.value + 1
+
+        createObj [
+            "msg" ==> msg
+            "count" ==> count
+            "onClick" ==> onClick
+        ]
+
+    let template =
+        html """
+        <div class="hello">
+            <h1>{{ msg }}</h1>
+            <button @click="onClick" class="counter">
+                You clicked me {{ count }} times.
+            </button>
+            <p>
+                Edit <code>HelloWorld.Feliz.fs</code> to test HMR.
+            </p>
+        </div>
+        """
 
 
-let HelloWorld (msg: string)  =
-    let count = Composition.ref 0
-
-    Vue.defineComponent(fun _ ->
-        Html.template [
-            Html.div [
-                prop.className "hello"
-                prop.children [
-                    Html.h1 msg
-                    Html.button [
-                        prop.className "counter"
-                        prop.onClick (fun _ -> count.value <- count.value + 1)
-                        prop.children [ Html.text $"You clicked me {count.value} times." ]
-                    ]
-                    Html.p "Edit <code>src/components/HelloWorld.Feliz.fs</code> to test HMR."
-                ]
-            ]
-        ])
+    createObj [ 
+        "setup" ==> setup
+        "template" ==> template
+    ] 
