@@ -8,14 +8,11 @@
   <ItemGroup>
     <Compile Include="./components/VnodeHello.fs" />
     <Compile Include="./components/Counter.fs" />
+    <Compile Include="./components/HelloWorld.Template.fs" />
     <Compile Include="./components/HelloWorld.Feliz.fs" />
     <Compile Include="App.Feliz.fs" />
     <Compile Include="Main.fs" />
     <ProjectReference Include="../../../src/Feliz.Vue.fsproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Feliz.ViewEngine" Version="0.24.0" />
   </ItemGroup>
 
 </Project>

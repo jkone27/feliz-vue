@@ -10,11 +10,12 @@
     <Compile Include="Vue.fs" />
     <Compile Include="VHyperScript.fs" />
     <Compile Include="Feliz.fs" />
+    <Compile Include="ViewEngine.Ext.fs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Fable.Core" Version="4.5.0" />
-    <PackageReference Include="Feliz.ViewEngine" Version="0.24.0" />
+    <PackageReference Include="Feliz.ViewEngine.Jkone27" Version="0.25.0-alpha" />
   </ItemGroup>
 
 </Project>

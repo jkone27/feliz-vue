@@ -21,6 +21,16 @@ module VHyperScript =
 
         props
         |> List.collect (function
+            | IReactProperty.EventHandler (k, v) -> 
+                let fn =
+                    match v with
+                    | EventHandlerType.Event(fn: obj -> unit) -> 
+                        fn
+                    | EventHandlerType.KeyEvent(key: obj, fn: obj -> unit) -> 
+                        // TODO: handle key
+                        fn
+                printfn "event: %s , value: %A" k v
+                [ k ==> fn ]
             | IReactProperty.KeyValue(k, v) -> 
                 printfn $"{k} value type: ${v.GetType().FullName}"
                 printfn "property: %s , value: %A" k v
